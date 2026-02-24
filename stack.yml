@@ -15,12 +15,12 @@ services:
       # --- Configurações Gerais e Sistema ---
       - TZ=America/Sao_Paulo
       - FZAP_LANGUAGE=pt-BR                               # pt-BR, en-US, es-LATAM
-      - PUBLIC_BASE_URL=https://exemplo.com
+      - PUBLIC_BASE_URL=https://exemplo.com               # URL completa onde a fzap está instalada
       #- LOG_LEVEL=info                                   # trace, debug, info, warn, error, fatal, panic
-      #- FZAP_SYSTEM_IDENTIFIER=flouds.com.br             # Uso interno no Chatwoot
-      #- FZAP_SYSTEM_NAME=FZAP                            # Nome exibido na interface
-      #- PLATFORM_NAME=Chatwoot                           # Visto no dashboard
-      #- DEFAULT_SERVICE_URL=https://app.chatwoot.com
+      #- FZAP_SYSTEM_IDENTIFIER=flouds.com.br             # Uso interno no Chatwoot - é o identificador do contato de onboarding
+      #- FZAP_SYSTEM_NAME=FZAP                            # Nome exibido no contato de onboarding 
+      #- PLATFORM_NAME=Chatwoot                           # Nome da plataforma white label do Chatwoot
+      #- DEFAULT_SERVICE_URL=https://app.chatwoot.com     # Url de exemplo de conexão e integração do Chawtoot
 
       # --- Autenticação e Licença ---
       - ADMIN_TOKEN=admin_token_exemplo
@@ -35,7 +35,7 @@ services:
       - DB_PASSWORD=senha_exemplo
 
       # --- WhatsApp e Webhooks ---
-      - SESSION_DEVICE_NAME=Fzap
+      - SESSION_DEVICE_NAME=Fzap                          # Nome da dispositivo conectado (aparece no celular)
       - WEBHOOK_FORMAT=json
       #- IMAGE_QUALITY_HD=false                           # true para HD, false para padrão
 
