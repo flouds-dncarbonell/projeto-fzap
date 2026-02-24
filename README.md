@@ -100,7 +100,7 @@ Se preferir, abra contato por este repositorio e enviamos proposta com o escopo 
 
 ## Links uteis
 
-- Codigo-fonte do produto: [flouds-dncarbonell/fzap](https://github.com/flouds-dncarbonell/fzap)
+- Site do produto: [flouds.com.br/produtos/fzap](https://flouds.com.br/produtos/fzap)
 - Docker Hub: [dncarbonell/fzap](https://hub.docker.com/r/dncarbonell/fzap)
-- Documentacao interativa: `/api` na sua instancia
+- Documentacao interativa: `/api` na sua instancia ou [flouds.com.br/produtos/fzap/docs](https://flouds.com.br/produtos/fzap/docs)
 
