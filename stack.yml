@@ -13,8 +13,8 @@ services:
 
     environment:
       ## Credenciais (exemplo)
-      - WUZAPI_ADMIN_TOKEN=admin_token_exemplo
-      - FLOUDS_LICENCE_KEY=
+      - ADMIN_TOKEN=admin_token_exemplo
+      - FLOUDS_LICENCE_KEY=                               # Deixe vazio para usar a versão free
       - PUBLIC_BASE_URL=https://exemplo.com
 
       # Internationalization (i18n) Configuration
