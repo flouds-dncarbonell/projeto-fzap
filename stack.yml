@@ -1,89 +1,79 @@
 version: "3.7"
-services:
 
+services:
   fzap:
     image: dncarbonell/fzap:latest
+
+    networks:
+      - FloudsNet
 
     volumes:
       - fzap_dbdata:/app/dbdata
       - fzap_files:/app/files
 
-    networks:
-      - FloudsNet ## Nome da rede interna
-
     environment:
-      ## Credenciais (exemplo)
+      # --- Configurações Gerais e Sistema ---
+      - TZ=America/Sao_Paulo
+      - FZAP_LANGUAGE=pt-BR                               # pt-BR, en-US, es-LATAM
+      - PUBLIC_BASE_URL=https://exemplo.com
+      #- LOG_LEVEL=info                                   # trace, debug, info, warn, error, fatal, panic
+      #- FZAP_SYSTEM_IDENTIFIER=flouds.com.br             # Uso interno no Chatwoot
+      #- FZAP_SYSTEM_NAME=FZAP                            # Nome exibido na interface
+      #- PLATFORM_NAME=Chatwoot                           # Visto no dashboard
+      #- DEFAULT_SERVICE_URL=https://app.chatwoot.com
+
+      # --- Autenticação e Licença ---
       - ADMIN_TOKEN=admin_token_exemplo
       - FLOUDS_LICENCE_KEY=                               # Deixe vazio para usar a versão free
-      - PUBLIC_BASE_URL=https://exemplo.com
 
-      # Internationalization (i18n) Configuration
-      - FZAP_LANGUAGE=pt-BR                               # System language: pt-BR (Portuguese), en-US (English), es-LATAM (Spanish)
-
-      #- LOG_LEVEL=info                                   # Log level: trace, debug, info (default), warn, error, fatal, panic
-      
-      ## Dados do postgres (exemplo)
+      # --- Banco de Dados (PostgreSQL) ---
+      - DB_DRIVER=postgres
       - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=fzap
       - DB_USER=postgres
       - DB_PASSWORD=senha_exemplo
-      - DB_NAME=fzap
-      - DB_PORT=5432
-      - DB_DRIVER=postgres
 
-      ## Timezone
-      - TZ=America/Sao_Paulo
-
-      ## Formato do webhook
+      # --- WhatsApp e Webhooks ---
+      - SESSION_DEVICE_NAME=Fzap
       - WEBHOOK_FORMAT=json
+      #- IMAGE_QUALITY_HD=false                           # true para HD, false para padrão
 
-      # Nome do dispositivo da sessão do WhatsApp exibido em dispositivos conectados
-      - SESSION_DEVICE_NAME=Fzap                  
-
-      # Configuração do Sistema FZAP
-      #- FZAP_SYSTEM_IDENTIFIER=flouds.com.br           # Identificador único do sistema para branding e URLs de webhook - para ser usado dentro do chatwoot
-      #- FZAP_SYSTEM_NAME=FZAP                          # Nome do sistema exibido em mensagens e na interface do usuário - para ser usado dentro do chatwoot
-      #- PLATFORM_NAME=Chatwoot                         # Nome da plataforma exibido na interface e em mensagens do sistema - a ser visto no dashboard
-      #- DEFAULT_SERVICE_URL=https://app.chatwoot.com   # URL padrão do Chatwoot para configuração de integração - a ser visto no dashboard
-
-      # Configuração da Qualidade de Imagem
-      #- IMAGE_QUALITY_HD=false                         # Enviar imagens em qualidade HD (true) ou qualidade padrão (false, padrão)
-
-      # Configuração do RabbitMQ (Sistema Empresarial Global)
-      #- RABBITMQ_URL=amqp://fzap:fzap@rabbitmq:5672/   # String de conexão com o servidor RabbitMQ
-      #- RABBITMQ_ENABLED=true                          # Ativar/desativar processamento RabbitMQ (defina como false para desativar)
-      #- RABBITMQ_EXCHANGE=fzap_events                  # Nome principal do exchange para roteamento de eventos
-      #- RABBITMQ_PREFIX=fzap                           # Prefixo da fila para isolamento entre instâncias
-
-      # Configuração Avançada do RabbitMQ (opcional - possui valores padrão)
-      #- RABBITMQ_FRAME_MAX=131072                      # Tamanho máximo de frame em bytes (128KB)
-      #- RABBITMQ_HEARTBEAT=30                          # Intervalo de heartbeat em segundos para saúde da conexão
-      #- RABBITMQ_MAX_RECONNECT=10                      # Número máximo de tentativas de reconexão antes de desistir
-      #- RABBITMQ_RECONNECT_DELAY=5                     # Atraso em segundos entre tentativas de reconexão
+      # --- Mensageria (RabbitMQ) ---
+      #- RABBITMQ_ENABLED=true
+      #- RABBITMQ_URL=amqp://fzap:fzap@rabbitmq:5672/
+      #- RABBITMQ_EXCHANGE=fzap_events
+      #- RABBITMQ_PREFIX=fzap
+      #- RABBITMQ_FRAME_MAX=131072                        # Tamanho máx de frame (128KB)
+      #- RABBITMQ_HEARTBEAT=30                            # Em segundos
+      #- RABBITMQ_MAX_RECONNECT=10
+      #- RABBITMQ_RECONNECT_DELAY=5                       # Em segundos
 
     deploy:
-        mode: replicated
-        replicas: 1
-        placement:
-          constraints:
-            - node.role == manager
-        labels:
-          - traefik.enable=true
-          - traefik.http.routers.fzap.rule=Host(`exemplo.com`)
-          - traefik.http.services.fzap.loadbalancer.server.port=8080
-          - traefik.http.routers.fzap.service=fzap
-          - traefik.http.routers.fzap.tls.certresolver=letsencryptresolver
-          - traefik.http.routers.fzap.entrypoints=websecure
-          - traefik.http.routers.fzap.tls=true
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        # Configuração Traefik
+        - traefik.enable=true
+        - traefik.http.routers.fzap.rule=Host(`exemplo.com`)
+        - traefik.http.routers.fzap.entrypoints=websecure
+        - traefik.http.routers.fzap.tls=true
+        - traefik.http.routers.fzap.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.fzap.service=fzap
+        - traefik.http.services.fzap.loadbalancer.server.port=8080
 
 volumes:
   fzap_dbdata:
-    external: true
     name: fzap_dbdata
-  fzap_files:
     external: true
+  fzap_files:
     name: fzap_files
+    external: true
 
 networks:
-  FloudsNet: ## Nome da rede interna
-    name: FloudsNet ## Nome da rede interna
+  FloudsNet:
+    name: FloudsNet
     external: true
