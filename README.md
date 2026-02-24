@@ -1,266 +1,106 @@
-# FZAP - WhatsApp Business API + Chatwoot Integration
+# FZAP - WhatsApp Business API para operacao profissional
 
 <div align="center">
 
-![FZAP Version](https://img.shields.io/badge/Version-1.6.1-success)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![FZAP Version](https://img.shields.io/badge/Version-1.15.3-success)
 [![Docker](https://img.shields.io/badge/Docker-Available-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/dncarbonell/fzap)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/flouds-dncarbonell/fzap/blob/main/LICENSE)
 
-**Solução empresarial completa para WhatsApp Business com integração nativa ao Chatwoot**
+**API WhatsApp completa com integracao nativa ao Chatwoot, Cloud API e Typebot**
 
-[Sobre](#-sobre-o-fzap) • [Recursos](#-recursos-principais) • [Docker](#-docker) • [Documentação](#-documentação) • [Suporte](#-suporte)
+[Recursos](#-recursos) • [Deploy](#-deploy) • [Aquisição](#-aquisição-da-fzap) • [Links](#-links-uteis)
 
 </div>
 
 ---
 
-## 📋 Sobre o FZAP
+## Sobre
 
-**FZAP** é uma API REST completa para WhatsApp Business que oferece integração nativa e bidirecional com o **Chatwoot**, permitindo centralizar todo o atendimento via WhatsApp em uma plataforma moderna de customer service.
+O **FZAP** e uma plataforma de mensageria WhatsApp para operacoes de atendimento, vendas e automacao.
 
-Construído sobre a biblioteca [@tulir/whatsmeow](https://github.com/tulir/whatsmeow), o FZAP se conecta diretamente aos servidores do WhatsApp sem usar navegadores ou emuladores, garantindo:
+Baseado em `whatsmeow`, conecta diretamente no WhatsApp sem navegador/emulador e adiciona recursos de operacao:
 
-- ⚡ **Alta Performance** - Baixo consumo de recursos
-- 🚀 **Velocidade** - Comunicação direta com WhatsApp
-- 💪 **Estabilidade** - Conexão nativa sem intermediários
-- 🔧 **Escalabilidade** - Suporte a múltiplas instâncias
+- Integracao bidirecional com **Chatwoot**
+- Suporte **multi-provider**: Whatsmeow e **Meta Cloud API**
+- Integracao nativa com **Typebot**
+- Dashboard web para operacao e configuracao
+- Webhooks, filas, proxy, S3 e recursos para ambiente de producao
 
----
-
-## ✨ Recursos Principais
-
-### 🎯 Integração Chatwoot Nativa
-
-O grande diferencial do FZAP: **integração completa e bidirecional com Chatwoot**.
-
-- ✅ **Sincronização Total** - WhatsApp ↔ Chatwoot em tempo real
-- ✅ **Todas as Mídias** - Imagens, vídeos, áudios, documentos, stickers
-- ✅ **Mensagens de Voz** - Suporte completo para PTT (Push-to-Talk)
-- ✅ **Respostas e Citações** - Sistema de quotes bidirecional
-- ✅ **Edição e Exclusão** - Sincronização de alterações
-- ✅ **Gerenciamento de Contatos** - Auto-detecção e merge inteligente
-- ✅ **Comandos de Bot** - Controle direto pelo Chatwoot
-- ✅ **Interface Web** - Dashboard completo para configuração
-
-### 💬 API WhatsApp Completa
-
-- **Mensagens:** Texto, mídia, localização, contatos, enquetes
-- **Grupos:** Criação, gerenciamento, convites
-- **Sessões:** Múltiplas contas simultâneas
-- **Presença:** Status de digitação, online/offline
-- **Webhooks:** Sistema avançado de notificações
-- **Autenticação:** Tokens individuais por instância
-
-### 🚀 Recursos Empresariais
-
-- **Filas de Mensagens** - Eliminação total de race conditions
-- **Recuperação Automática** - Sistema inteligente de recovery
-- **Cache Avançado** - Performance otimizada
-- **Armazenamento S3** - Integração opcional para mídias
-- **RabbitMQ** - Distribuição de eventos em larga escala
-- **Proxy Support** - Configuração por instância
-- **Customização** - Branding personalizável
+Versao de referencia atual: **v1.15.3**.
 
 ---
 
-## 🐳 Docker
+## Recursos
 
-FZAP está disponível como imagem Docker pronta para uso:
+- **WhatsApp API completa**: texto, imagem, audio, video, documento, contato, localizacao, enquetes, interativos (buttons/list/carousel), status/stories, grupos e comunidades.
+- **Chatwoot nativo**: sincronizacao de mensagens e midias, quote, edicao/exclusao, comandos de bot e importacao de historico.
+- **Cloud API (Meta)**: conexao por `providerType=cloudapi` e webhook publico `GET/POST /webhook/meta/{user_token}`.
+- **Typebot nativo**: CRUD de bots, sessoes e gatilhos por API.
+- **Escalabilidade**: RabbitMQ opcional com fallback automatico.
+- **Armazenamento**: suporte a S3 por instancia.
+- **Rede**: proxy por instancia com rotacao.
+- **White-label**: `PLATFORM_NAME`, `FZAP_SYSTEM_NAME`, `FZAP_SYSTEM_IDENTIFIER`.
 
-### Docker Hub
+---
 
-**Registry:** [`dncarbonell/fzap`](https://hub.docker.com/r/dncarbonell/fzap)
+## Deploy
+
+### Imagem Docker
 
 ```bash
-# Última versão estável
 docker pull dncarbonell/fzap:latest
-
-# Versão específica
-docker pull dncarbonell/fzap:v1.6.1
+# ou fixa
+docker pull dncarbonell/fzap:v1.15.3
 ```
 
-### Quick Start
+### Execucao rapida (minima)
 
 ```bash
 docker run -d -p 8080:8080 \
-  -e WUZAPI_ADMIN_TOKEN=seu_token_seguro \
-  -v $(pwd)/data:/app/data \
+  -e ADMIN_TOKEN=troque-este-token \
+  -e TZ=America/Sao_Paulo \
+  -v $(pwd)/dbdata:/app/dbdata \
   dncarbonell/fzap:latest
 ```
 
-Acesse: `http://localhost:8080/dashboard`
+### Stack completa
+
+A stack completa (Swarm/Traefik/PostgreSQL/RabbitMQ/volumes/rede) esta neste arquivo:
+
+- [stack.yml](https://github.com/flouds-dncarbonell/projeto-fzap/blob/main/stack.yml)
 
 ---
 
-## 📚 Documentação
+## Interfaces
 
-### Interfaces Web
-
-Após iniciar o FZAP, acesse:
-
-- **Dashboard:** `http://localhost:8080/dashboard`
-  - Gerenciamento completo de instâncias
-  - Configuração da integração Chatwoot
-  - Testes e monitoramento
-
-- **API Documentation:** `http://localhost:8080/api`
-  - Documentação Swagger interativa
-  - Testes de endpoints
-
-- **QR Code Login:** `http://localhost:8080/login`
-  - Conexão rápida ao WhatsApp
-
-### Configuração Chatwoot
-
-1. Acesse o Dashboard
-2. Configure sua instância Chatwoot:
-   - URL da instância
-   - Account ID
-   - API Token
-3. Ative a integração
-4. Pronto! Mensagens sincronizadas automaticamente
-
-### Comandos de Bot
-
-Execute comandos diretamente no Chatwoot:
-
-- `/init` - Conectar ao WhatsApp
-- `/status` - Ver status da conexão
-- `/clearcache` - Limpar cache
-- `/disconnect` - Desconectar
+- Dashboard v2: `http://localhost:8080/dashboard`
+- Dashboard legado: `http://localhost:8080/legacy`
+- Swagger/API: `http://localhost:8080/api`
 
 ---
 
-## 🎯 Casos de Uso
+## Licenciamento
 
-### Atendimento ao Cliente
-Centralize todas as conversas WhatsApp no Chatwoot, permitindo múltiplos atendentes responderem pelo mesmo número.
+O FZAP inicia em **modo Free** sem `FLOUDS_LICENCE_KEY`.
 
-### Automação
-Integre com sistemas externos via webhooks para criar fluxos automatizados de resposta e notificação.
-
-### Chatbots
-Desenvolva bots inteligentes com integração a IA (GPT, DialogFlow, etc.) através da API REST.
-
-### Notificações
-Envie alertas, confirmações e atualizações de forma programática para seus clientes.
+Com licenca ativa, recursos premium ficam habilitados conforme plano contratado.
 
 ---
 
-## ⚙️ Configuração
+## Aquisição da FZAP
 
-### Variáveis de Ambiente
+Para **adquirir a FZAP** (licenca, implantacao e suporte):
 
-```env
-# Essencial
-WUZAPI_ADMIN_TOKEN=seu_token_admin
-DB_TYPE=sqlite
+- **Email:** `daniel@flouds.com.br`
+- **WhatsApp:** `+55 51 99864-1731`
 
-# Opcional - Branding
-FZAP_SYSTEM_IDENTIFIER=suaempresa.com
-PLATFORM_NAME=SuaPlataforma
-
-# Opcional - Performance
-MAX_FILE_SIZE_MB=100
-DOWNLOAD_TIMEOUT_SECONDS=120
-MESSAGE_DELIVERY_TIMEOUT_MINUTES=30
-```
-
-Para uso com PostgreSQL, RabbitMQ ou S3, consulte a documentação completa na API.
+Se preferir, abra contato por este repositorio e enviamos proposta com o escopo do seu ambiente.
 
 ---
 
-## 🔒 Segurança e Compliance
+## Links uteis
 
-### ⚠️ Aviso Importante
+- Codigo-fonte do produto: [flouds-dncarbonell/fzap](https://github.com/flouds-dncarbonell/fzap)
+- Docker Hub: [dncarbonell/fzap](https://hub.docker.com/r/dncarbonell/fzap)
+- Documentacao interativa: `/api` na sua instancia
 
-O uso do FZAP deve estar em conformidade com os **Termos de Serviço do WhatsApp**.
-
-**Não permitido:**
-- ❌ Envio de SPAM
-- ❌ Mensagens em massa não solicitadas
-- ❌ Práticas abusivas
-
-**Violações podem resultar no banimento permanente do número.**
-
-Para uso comercial em larga escala, considere a **WhatsApp Business API oficial**.
-
-### Boas Práticas
-
-- Use tokens seguros e complexos
-- Configure HTTPS em produção
-- Implemente rate limiting
-- Faça backups regulares
-- Monitore logs de uso
-
----
-
-## 📊 Versões
-
-### 🎉 v1.6.1 - Atual
-Melhorias de estabilidade e performance
-
-### 🚀 v1.6.0
-Sistema avançado de webhooks e integração S3
-
-### 💪 v1.5.0
-Produção ready com RabbitMQ global
-
-### ⚡ v1.4.0
-Integração RabbitMQ e sistema de boas-vindas
-
-[Ver changelog completo →](https://github.com/flouds-dncarbonell/fzap)
-
----
-
-## 🛠️ Suporte
-
-### Recursos Disponíveis
-
-- 📖 **Documentação API:** Swagger em `/api`
-- 🐳 **Docker Hub:** [dncarbonell/fzap](https://hub.docker.com/r/dncarbonell/fzap)
-- 💻 **Código Fonte:** [GitHub](https://github.com/flouds-dncarbonell/fzap)
-- 💬 **Issues:** [GitHub Issues](https://github.com/flouds-dncarbonell/fzap/issues)
-
----
-
-## 🌟 Star History
-
-### WuzAPI (Projeto Base)
-[![Star History Chart](https://api.star-history.com/svg?repos=asternic/wuzapi&type=Date)](https://www.star-history.com/#asternic/wuzapi&Date)
-
----
-
-## 📝 Licença
-
-**MIT License**
-
-- **FZAP** - Desenvolvido por Daniel Carbonell
-- **WuzAPI** - Projeto original por Nicolás Gudiño
-
----
-
-## ⚖️ Legal
-
-Este software não é afiliado, autorizado, mantido, patrocinado ou endossado pelo WhatsApp ou qualquer uma de suas afiliadas. Este é um software independente e não oficial.
-
-**Use por sua conta e risco.**
-
----
-
-## 🙏 Créditos
-
-- **Daniel Carbonell** - Desenvolvimento FZAP e integração Chatwoot
-- **[@tulir](https://github.com/tulir)** - Biblioteca whatsmeow
-- **[Nicolás Gudiño](https://github.com/asternic)** - Projeto WuzAPI original
-- Todos os [contribuidores](https://github.com/asternic/wuzapi/graphs/contributors) do WuzAPI
-
----
-
-<div align="center">
-
-**Desenvolvido por Daniel Carbonell**
-
-[📦 Docker Hub](https://hub.docker.com/r/dncarbonell/fzap) • [💻 GitHub](https://github.com/flouds-dncarbonell/fzap) • [📖 Documentação](http://localhost:8080/api)
-
-</div>
