@@ -23,9 +23,9 @@ services:
       #- DEFAULT_SERVICE_URL=https://app.chatwoot.com     # Url de exemplo de conexão e integração do Chawtoot
 
       # --- Autenticação e Licença ---
-      - ADMIN_TOKEN=admin_token_exemplo
-      - FLOUDS_LICENCE_KEY=                               # Deixe vazio para usar a versão free
-      - FLOUDS_LIFETIME_LICENCE_KEY=                      # Caso tenha versão vitalícia
+      - ADMIN_TOKEN=admin_token_exemplo                   # Token de autenticação da API. Escolha um valor seguro
+      - FLOUDS_LICENCE_KEY=                               # Deixe vazio para usar a versão free - Em caso de assinatura, a key estará no seu dashboard
+      - FLOUDS_LIFETIME_LICENCE_KEY=                      # Caso tenha versão vitalícia (licença fixa por domínio - legado)
 
       # --- Banco de Dados (PostgreSQL) ---
       - DB_DRIVER=postgres
