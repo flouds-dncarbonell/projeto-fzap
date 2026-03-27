@@ -17,10 +17,10 @@ services:
       - FZAP_LANGUAGE=pt-BR                               # pt-BR, en-US, es-LATAM
       - PUBLIC_BASE_URL=https://exemplo.com               # URL completa onde a fzap está instalada
       #- LOG_LEVEL=info                                   # trace, debug, info, warn, error, fatal, panic
-      #- FZAP_SYSTEM_IDENTIFIER=flouds.com.br             # Uso interno no Chatwoot - é o identificador do contato de onboarding
-      #- FZAP_SYSTEM_NAME=FZAP                            # Nome exibido no contato de onboarding 
-      #- PLATFORM_NAME=Chatwoot                           # Nome da plataforma white label do Chatwoot
-      #- DEFAULT_SERVICE_URL=https://app.chatwoot.com     # Url de exemplo de conexão e integração do Chawtoot
+      #- CHATWOOT_SYSTEM_IDENTIFIER=flouds.com.br         # Uso interno no Chatwoot - é o identificador do contato de onboarding - Antes era FZAP_SYSTEM_IDENTIFIER
+      #- CHATWOOT_SYSTEM_NAME=FZAP                        # Nome exibido no contato de onboarding - Antes era FZAP_SYSTEM_NAME
+      #- CHATWOOT_PLATFORM_NAME=Chatwoot                  # Nome da plataforma white label do Chatwoot - Antes era PLATFORM_NAME
+      #- CHATWOOT_SERVICE_URL=https://app.chatwoot.com    # Url de exemplo de conexão e integração do Chawtoot - Antes era DEFAULT_SERVICE_URL
 
       # --- Autenticação e Licença ---
       - ADMIN_TOKEN=admin_token_exemplo                   # Token de autenticação da API. Escolha um valor seguro
