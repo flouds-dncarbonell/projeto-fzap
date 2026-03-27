@@ -15,7 +15,7 @@ services:
       # --- Configurações Gerais e Sistema ---
       - TZ=America/Sao_Paulo
       - FZAP_LANGUAGE=pt-BR                               # pt-BR, en-US, es-LATAM
-      - PUBLIC_BASE_URL=https://exemplo.com               # URL completa onde a fzap está instalada
+      - PUBLIC_BASE_URL=https://exemplo.com               # URL completa onde a fzap está instalada - Se instalado em subdomínio colocar o subdomínio completo, sempre com "https://". Ex: https://api.exemplo.com
       #- LOG_LEVEL=info                                   # trace, debug, info, warn, error, fatal, panic
       #- CHATWOOT_SYSTEM_IDENTIFIER=flouds.com.br         # Uso interno no Chatwoot - é o identificador do contato de onboarding - Antes era FZAP_SYSTEM_IDENTIFIER
       #- CHATWOOT_SYSTEM_NAME=FZAP                        # Nome exibido no contato de onboarding - Antes era FZAP_SYSTEM_NAME
