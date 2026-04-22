@@ -40,6 +40,13 @@ services:
       - WEBHOOK_FORMAT=json
       #- IMAGE_QUALITY_HD=false                           # true para HD, false para padrão
 
+      # --- WhatsApp Cloud API (Meta Embedded Signup) ---
+      # Configurações para habilitar o fluxo guiado de cadastro direto pela Meta Cloud API.
+      # ATENÇÃO: Recurso exclusivo para planos pagos (requer licença válida, não funciona na versão free).
+      #- META_APP_ID=                                     # Meta App ID (obtido em developers.facebook.com)
+      #- META_APP_SECRET=                                 # Meta App Secret (chave secreta do aplicativo)
+      #- META_CONFIG_ID=                                  # Meta Business Login Config ID (ID de configuração do login)
+
       # --- Mensageria (RabbitMQ) ---
       #- RABBITMQ_ENABLED=true
       #- RABBITMQ_URL=amqp://fzap:fzap@rabbitmq:5672/
