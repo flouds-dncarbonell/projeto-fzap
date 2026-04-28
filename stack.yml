@@ -58,10 +58,10 @@ services:
       #- RABBITMQ_RECONNECT_DELAY=5                       # Em segundos
 
       # --- Monitoramento de Erros (Sentry) - Opcional ---
-      # O Sentry é uma ferramenta de rastreamento que captura *somente erros* e falhas da aplicação em tempo real.
-      # Isso permite que o desenvolvedor identifique e corrija os problemas de forma ativa, sem precisar esperar uma reclamação ou feedback do usuário.
-      # A URL (DSN) de integração deve ser obtida com a equipe no grupo de suporte oficial. Deixe vazio caso não queira utilizar.
-      #- SENTRY_DSN=
+      # O Sentry é uma ferramenta de rastreamento que captura *somente erros* e falhas da aplicação em tempo real.
+      # Isso permite que o desenvolvedor identifique e corrija os problemas de forma ativa, sem precisar esperar uma reclamação ou feedback do usuário.
+      # A URL (DSN) de integração deve ser obtida com a equipe no grupo de suporte oficial. Deixe vazio caso não queira utilizar.
+      #- SENTRY_DSN=
       
     deploy:
       mode: replicated
