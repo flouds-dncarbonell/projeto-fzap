@@ -10,6 +10,7 @@ services:
     volumes:
       - fzap_dbdata:/app/dbdata
       - fzap_files:/app/files
+      - fzap_logos:/app/data/public-folder-logos
 
     environment:
       # --- Configurações Gerais e Sistema ---
@@ -85,6 +86,9 @@ volumes:
     external: true
   fzap_files:
     name: fzap_files
+    external: true
+  fzap_logos:
+    name: fzap_logos
     external: true
 
 networks:
