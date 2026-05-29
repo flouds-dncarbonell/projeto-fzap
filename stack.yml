@@ -17,6 +17,7 @@ services:
       - TZ=America/Sao_Paulo
       - FZAP_LANGUAGE=pt-BR                               # pt-BR, en-US, es-LATAM
       - PUBLIC_BASE_URL=https://exemplo.com               # URL completa onde a fzap está instalada - Se instalado em subdomínio colocar o subdomínio completo, sempre com "https://". Ex: https://api.exemplo.com
+      #- GLOBAL_PROXY_URL=                                # Proxy global opcional para todas as instâncias; o proxy de cada instância tem prioridade e o substitui
       #- LOG_LEVEL=info                                   # trace, debug, info, warn, error, fatal, panic
       #- CHATWOOT_SYSTEM_IDENTIFIER=flouds.com.br         # Uso interno no Chatwoot - é o identificador do contato de onboarding - Antes era FZAP_SYSTEM_IDENTIFIER
       #- CHATWOOT_SYSTEM_NAME=FZAP                        # Nome exibido no contato de onboarding - Antes era FZAP_SYSTEM_NAME
@@ -35,6 +36,13 @@ services:
       - DB_NAME=fzap
       - DB_USER=postgres
       - DB_PASSWORD=senha_exemplo
+
+      # --- Banco de Dados do Chatwoot (Global - Opcional) ---
+      #- CHATWOOT_GLOBAL_DB_HOST=                         # Host global opcional do PostgreSQL do Chatwoot; os campos de cada instância têm prioridade e o substituem
+      #- CHATWOOT_GLOBAL_DB_PORT=5432                     # Porta global opcional do PostgreSQL do Chatwoot
+      #- CHATWOOT_GLOBAL_DB_NAME=                         # Nome global opcional do banco de dados do Chatwoot
+      #- CHATWOOT_GLOBAL_DB_USER=                         # Usuário global opcional do banco de dados do Chatwoot
+      #- CHATWOOT_GLOBAL_DB_PASS=                         # Senha global opcional do banco de dados do Chatwoot
 
       # --- WhatsApp e Webhooks ---
       - SESSION_DEVICE_NAME=Fzap                          # Nome da dispositivo conectado (aparece no celular)
