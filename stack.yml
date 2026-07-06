@@ -49,6 +49,13 @@ services:
       - WEBHOOK_FORMAT=json
       #- IMAGE_QUALITY_HD=false                           # true para HD, false para padrão
 
+      # --- Transcrição de Áudio (IA) ---
+      #- TRANSCRIPTION_ENABLED=false                       # Habilita a transcrição global de áudio (true/false, padrão: false)
+      #- TRANSCRIPTION_PROVIDER=openai                     # Provedor de transcrição: openai (padrão) ou groq
+      #- TRANSCRIPTION_API_KEY=                            # Chave de API do provedor de transcrição selecionado
+      #- TRANSCRIPTION_MODEL=                              # Substituição de modelo (padrão: whisper-1 para openai, whisper-large-v3 para groq)
+      #- TRANSCRIPTION_BASE_URL=                           # Substituição opcional de endpoint (URL) para o provedor selecionado
+
       # --- WhatsApp Cloud API (Meta Embedded Signup) ---
       # Configurações para habilitar o fluxo guiado de cadastro direto pela Meta Cloud API.
       # ATENÇÃO: Recurso exclusivo para planos pagos (requer licença válida, não funciona na versão free).
