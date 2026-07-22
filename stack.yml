@@ -18,6 +18,21 @@ services:
       - FZAP_LANGUAGE=pt-BR                               # pt-BR, en-US, es-LATAM
       - PUBLIC_BASE_URL=https://exemplo.com               # URL completa onde a fzap está instalada - Se instalado em subdomínio colocar o subdomínio completo, sempre com "https://". Ex: https://api.exemplo.com
       #- GLOBAL_PROXY_URL=                                # Proxy global opcional para todas as instâncias; o proxy de cada instância tem prioridade e o substitui
+
+      # --- Armazenamento S3 Global (Backblaze B2 - Opcional) ---
+      # Instâncias sem S3 próprio usam este bucket; a configuração individual tem prioridade.
+      # Os arquivos são separados por instância no caminho users/<id>/...
+      # O S3 global é ativado automaticamente ao preencher bucket, access key e secret key.
+      #- GLOBAL_S3_BUCKET=seu-bucket
+      #- GLOBAL_S3_ACCESS_KEY=seu-application-key-id
+      #- GLOBAL_S3_SECRET_KEY=sua-application-key
+      #- GLOBAL_S3_ENDPOINT=https://s3.us-west-004.backblazeb2.com
+      #- GLOBAL_S3_REGION=us-west-004
+      #- GLOBAL_S3_PATH_STYLE=false
+      #- GLOBAL_S3_PUBLIC_URL=                             # URL pública ou CDN opcional
+      #- GLOBAL_S3_MEDIA_DELIVERY=both                    # base64, s3 ou both
+      #- GLOBAL_S3_RETENTION_DAYS=0                       # 0 mantém os arquivos indefinidamente
+
       #- LOG_LEVEL=info                                   # trace, debug, info, warn, error, fatal, panic
       #- CHATWOOT_SYSTEM_IDENTIFIER=flouds.com.br         # Uso interno no Chatwoot - é o identificador do contato de onboarding - Antes era FZAP_SYSTEM_IDENTIFIER
       #- CHATWOOT_SYSTEM_NAME=FZAP                        # Nome exibido no contato de onboarding - Antes era FZAP_SYSTEM_NAME
